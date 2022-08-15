@@ -11,6 +11,6 @@
     "morgan": "^1.10.0"
   },
   "scripts": {
-    "start": "PORT=63000 HOST=localhost node index.js"
+    "start": "node index.js"
   }
 }

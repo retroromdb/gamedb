@@ -6,8 +6,8 @@ const { createProxyMiddleware } = require('http-proxy-middleware');
 const app = express();
 
 // Configuration
-const PORT = 63000;
-const HOST = "localhost";
+const PORT = !!process.env.PORT ? process.env.PORT : 80;
+const HOST = !!process.env.HOST ? process.env.HOST : undefined;
 const API_SERVICE_URL = "https://downloads.retrostic.com/roms";
 
 // Logging
@@ -22,8 +22,14 @@ app.use('/retrostic', createProxyMiddleware({
     },
 }));
 
- // Start the Proxy
-app.listen(PORT, HOST, () => {
-    console.log(`Starting Proxy at ${HOST}:${PORT}`);
- });
+if (!!HOST) {
+    app.listen(PORT, HOST, () => {
+        console.log(`Starting Proxy at ${HOST}:${PORT}`);
+    });
+} else {
+    app.listen(PORT, () => {
+        console.log(`Starting Proxy at ${PORT}`);
+    });
+}
+
  
